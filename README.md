@@ -1,4 +1,4 @@
-# Nutrition BE
+# Urlshorter BE
 
 ## Description
 
@@ -44,6 +44,6 @@ npm run start
 ### Export keycloak data
 
 ```bash
-/opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm Nutrition --users realm_file
+/opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm Urlshorter --users realm_file
 ```
 

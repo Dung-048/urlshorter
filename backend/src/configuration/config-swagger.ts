@@ -9,8 +9,8 @@ export function configureSwagger(
 ) {
   if (configService.enableSwagger) {
     const config = new DocumentBuilder()
-      .setTitle('Nutrition')
-      .setDescription('Nutrition API')
+      .setTitle('Urlshorter')
+      .setDescription('Urlshorter API')
       .setVersion('1.0')
       .addTag('api')
       .addBearerAuth()
