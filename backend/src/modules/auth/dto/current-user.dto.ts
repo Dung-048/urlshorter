@@ -53,8 +53,6 @@ export class CurrentUserDto {
             role: user.role,
             birthday: user.birthday,
             phoneNumber: user.phoneNumber,
-            relationshipType: user.relationshipType,
-            relativeOfId: user.relativeOfId,
         };
     }
 }

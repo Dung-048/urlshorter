@@ -17,7 +17,6 @@ import { RolesGuard } from './guards/roles.guard';
 import { AuthModule } from "./modules/auth/auth.module";
 import { ImageModule } from './modules/image/image.module';
 import { KeycloakModule } from './modules/keycloak/keycloak.module';
-import { StatModule } from './modules/stat/stat.module';
 import { UserModule } from './modules/user/user.module';
 import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
@@ -54,8 +53,7 @@ import { SharedModule } from './shared/shared.module';
         AuthModule,
         UserModule,
         KeycloakModule,
-        ImageModule,
-        StatModule,
+        ImageModule
     ],
     providers: [
         {

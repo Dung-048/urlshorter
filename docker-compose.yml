@@ -43,9 +43,9 @@ services:
       KC_DB_PASSWORD: $DB_PASSWORD
       KEYCLOAK_ADMIN: $KEYCLOAK_ADMIN
       KEYCLOAK_ADMIN_PASSWORD: $KEYCLOAK_ADMIN_PASSWORD
-      KEYCLOAK_IMPORT: /opt/keycloak/data/import/urlshorter-realm.json -Dkeycloak.profile.feature.upload_scripts=enabled
+      KEYCLOAK_IMPORT: /opt/keycloak/data/import/realm-export.json -Dkeycloak.profile.feature.upload_scripts=enabled
       KEYCLOAK_EXTRA_ARGS: --import-realm
-      KC_LOG_LEVEL: DEBUG
+      KC_LOG_LEVEL: debug
       KC_LOG_CONSOLE_COLOR: "true"
       KC_LOG_CONSOLE_OUTPUT: 'default'
       KC_LOG_LEVEL_EVENTS: 'default'

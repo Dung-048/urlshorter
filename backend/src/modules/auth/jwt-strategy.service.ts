@@ -13,7 +13,6 @@ import {emptyUuid} from '../../utils/uuid.utils';
 import {Gender} from "../user/domain/gender";
 
 export const guestUser: Partial<UserEntity> = {
-    diaries: [],
     id: emptyUuid,
     keyCloakId: emptyUuid,
     createdAt: new Date(),
@@ -23,11 +22,9 @@ export const guestUser: Partial<UserEntity> = {
     email: 'Guest',
     gender: Gender.MALE,
     role: RoleType.GUEST,
-    isDoctor: false,
     birthday: '',
     phoneNumber: '',
     appleUserIdentifier: undefined,
-    relativeOfId: emptyUuid,
 };
 
 @Injectable()
