@@ -48,10 +48,10 @@ services:
       KC_LOG_LEVEL: debug
       KC_LOG_CONSOLE_COLOR: "true"
       KC_LOG_CONSOLE_OUTPUT: 'default'
-      KC_LOG_LEVEL_EVENTS: 'default'
-      KC_LOG_LEVEL_ADMIN_EVENTS: 'default'
-      KC_LOG_LEVEL_TRANSACTIONS: 'default'
-      KC_LOG_LEVEL_SERVICES: 'default'
+      KC_LOG_LEVEL_EVENTS: 'debug'
+      KC_LOG_LEVEL_ADMIN_EVENTS: 'debug'
+      KC_LOG_LEVEL_TRANSACTIONS: 'debug'
+      KC_LOG_LEVEL_SERVICES: 'debug'
       KC_HOSTNAME_STRICT: 'false'
       KC_PROXY: edge
     volumes:
