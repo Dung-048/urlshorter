@@ -32,7 +32,7 @@ nest g resource users --no-spec
 
 ```bash
 # create new migration
-npm run typeorm:migrate src/database/migrations/AddUser
+npm run migration-generate src/database/migrations/AddUser
 
 # apply pending migrations
 npm run migration:run
