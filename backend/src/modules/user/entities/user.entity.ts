@@ -1,13 +1,13 @@
-import {Column, Entity} from "typeorm";
-import {Uuid} from "../../../common/types";
-import {Gender} from "../domain/gender";
-import {AbstractEntity} from "../../../common/abstract.entity";
-import {RoleType} from "../../../guards/role-type";
+import { Column, Entity } from "typeorm";
+import { Uuid } from "../../../common/types";
+import { Gender } from "../domain/gender";
+import { AbstractEntity } from "../../../common/abstract.entity";
+import { RoleType } from "../../../guards/role-type";
 
 @Entity('users')
 export class UserEntity extends AbstractEntity {
 
-    @Column({unique: true, nullable: true})
+    @Column({ unique: true, nullable: true })
     keyCloakId?: Uuid;
 
     @Column()
@@ -16,10 +16,10 @@ export class UserEntity extends AbstractEntity {
     @Column()
     lastName: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     picture?: string;
 
-    @Column({unique: true})
+    @Column({ unique: true })
     email: string;
 
     @Column({
@@ -36,12 +36,15 @@ export class UserEntity extends AbstractEntity {
     })
     role: RoleType;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     appleUserIdentifier?: string;
 
-    @Column({type: 'date', nullable: true})
+    @Column({ type: 'date', nullable: true })
     birthday?: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     phoneNumber: string;
+
+    // @Column({ nullable: true })
+    // address?: string;
 }

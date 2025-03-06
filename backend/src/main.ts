@@ -1,4 +1,7 @@
-/* eslint-disable unicorn/prefer-top-level-await */
+import 'reflect-metadata';
+import * as dotenv from 'dotenv';
+dotenv.config(); 
+
 import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { json, urlencoded } from 'express';
