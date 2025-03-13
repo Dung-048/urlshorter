@@ -1,14 +1,14 @@
-import { Column, Entity } from "typeorm";
-import { Uuid } from "../../../common/types";
-import { Gender } from "../domain/gender";
-import { AbstractEntity } from "../../../common/abstract.entity";
-import { RoleType } from "../../../guards/role-type";
+import {Column, Entity, OneToMany} from "typeorm";
+import {AbstractEntity} from "../../../common/abstract.entity";
+import {UrlEntity} from "../../urls/entities/url.entity";
+import {Gender} from "../domain/gender";
+import {RoleType} from "../../../guards/role-type";
+import {Uuid} from "../../../common/types";
 
 @Entity('users')
 export class UserEntity extends AbstractEntity {
-
-    @Column({ unique: true, nullable: true })
-    keyCloakId?: Uuid;
+    @Column({ type: 'uuid', unique: true, nullable: true })
+    keyCloakId?: Uuid | null;
 
     @Column()
     firstName: string;
@@ -42,9 +42,9 @@ export class UserEntity extends AbstractEntity {
     @Column({ type: 'date', nullable: true })
     birthday?: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, default: '' }) // Đặt giá trị mặc định để tránh undefined
     phoneNumber: string;
 
-    // @Column({ nullable: true })
-    // address?: string;
+    @OneToMany(() => UrlEntity, (url) => url.user, { cascade: true })
+    urls: UrlEntity[];
 }

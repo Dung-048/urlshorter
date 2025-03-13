@@ -65,7 +65,7 @@ export class ImageController {
 
     @Get(':fileName')
     @UseInterceptors(FileInterceptor('file'))
-    async get(@Param('fileName') fileName: string, @Res({passthrough: true}) res: Response) {
+    async get( @Param('fileName') fileName: string, @Res({passthrough: true}) res: Response) {
         const [name, extension] = fileName.split('.');
 
         if (!validUUid(name) || !validFileExtension(extension)) {

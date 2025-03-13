@@ -20,6 +20,7 @@ import { KeycloakModule } from './modules/keycloak/keycloak.module';
 import { UserModule } from './modules/user/user.module';
 import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
+import { UrlModule } from './modules/urls/url.module';
 
 @Module({
     imports: [
@@ -53,7 +54,8 @@ import { SharedModule } from './shared/shared.module';
         AuthModule,
         UserModule,
         KeycloakModule,
-        ImageModule
+        ImageModule,
+        UrlModule,
     ],
     providers: [
         {
