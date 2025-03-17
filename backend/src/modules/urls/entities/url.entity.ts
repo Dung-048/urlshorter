@@ -1,4 +1,4 @@
-import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {UserEntity} from '../../user/entities/user.entity';
 
 @Entity({ name: 'urls' })
@@ -19,6 +19,5 @@ export class UrlEntity {
     createdAt: Date;
 
     @ManyToOne(() => UserEntity, (user) => user.urls, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'user_id' })
     user: UserEntity;
 }

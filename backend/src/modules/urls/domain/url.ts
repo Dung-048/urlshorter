@@ -12,7 +12,7 @@ export class Url {
 
     public static fromEntity(urlEntity: UrlEntity): Url {
         return {
-            id: urlEntity.id,
+            id: urlEntity.id as Uuid,
             originalUrl: urlEntity.original_url,
             shortCode: urlEntity.short_code,
             visitCount: urlEntity.visitCount,

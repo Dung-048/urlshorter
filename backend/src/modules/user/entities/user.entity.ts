@@ -42,7 +42,7 @@ export class UserEntity extends AbstractEntity {
     @Column({ type: 'date', nullable: true })
     birthday?: string;
 
-    @Column({ nullable: true, default: '' }) // Đặt giá trị mặc định để tránh undefined
+    @Column({ nullable: true})
     phoneNumber: string;
 
     @OneToMany(() => UrlEntity, (url) => url.user, { cascade: true })

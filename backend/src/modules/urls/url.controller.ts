@@ -17,6 +17,11 @@ export class UrlController {
     async getUrl(@Param('shortCode') shortCode: string): Promise<UrlSimpleDto> {
         return UrlSimpleDto.fromDomain(await this.urlService.getUrl(shortCode));
     }
+    @Get()
+    async getAllUrls(): Promise<UrlSimpleDto[]> {
+        const urls = await this.urlService.getAllUrls();
+        return urls.map(url => UrlSimpleDto.fromDomain(url));
+    }
 
     @Delete(':shortCode')
     async deleteUrl(@Param('shortCode') shortCode: string): Promise<void> {

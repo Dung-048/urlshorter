@@ -10,7 +10,8 @@ export class UrlService {
     constructor(
         @InjectRepository(UrlEntity)
         private readonly urlRepository: Repository<UrlEntity>,
-    ) {}
+    ) {
+    }
 
     async createUrl(urlRequestDto: UrlRequest): Promise<Url> {
         return Url.fromEntity(await this.urlRepository.save(
@@ -23,13 +24,25 @@ export class UrlService {
 
     async getUrl(shortCode: string): Promise<Url> {
         const urlEntity = await this.urlRepository.findOneBy( { short_code: shortCode } );
-        if (!urlEntity) throw new NotFoundException();
+
+        if (!urlEntity) {
+            throw new NotFoundException();
+        }
+
         return Url.fromEntity(urlEntity);
     }
 
     async deleteUrl(shortCode: string): Promise<void> {
-        if (!(await this.urlRepository.delete({ short_code: shortCode })).affected) {
+        const result = await await this.urlRepository.delete({short_code: shortCode});
+
+        if (result.affected == 0) {
             throw new NotFoundException();
         }
     }
+
+    async getAllUrls(): Promise<Url[]> {
+        const urlEntities = await this.urlRepository.find();
+        return urlEntities.map(urlEntity => Url.fromEntity(urlEntity));
+    }
+
 }

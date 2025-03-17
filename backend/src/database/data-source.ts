@@ -1,16 +1,12 @@
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
-import type { DataSourceOptions } from 'typeorm';
-import { SnakeNamingStrategy } from '../configuration/snake-naming.strategy';
-
-// Load biến môi trường từ .env
-import * as dotenv from 'dotenv';
+import type {DataSourceOptions} from 'typeorm';
+import {DataSource} from 'typeorm';
+import {SnakeNamingStrategy} from '../configuration/snake-naming.strategy';
 import * as path from 'path';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 export const AppDataSource = new DataSource({
-  type: process.env.DB_TYPE as any, // TypeORM yêu cầu kiểu cụ thể, nên cần ép kiểu
+  type: process.env.DB_TYPE as any,
   host: process.env.DB_HOST,
   port: process.env.DB_PORT ? Number.parseInt(process.env.DB_PORT, 10) : 5432,
   username: process.env.DB_USERNAME,
