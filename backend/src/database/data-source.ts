@@ -4,7 +4,6 @@ import {DataSource} from 'typeorm';
 import {SnakeNamingStrategy} from '../configuration/snake-naming.strategy';
 import * as path from 'path';
 
-
 export const AppDataSource = new DataSource({
   type: process.env.DB_TYPE as any,
   host: process.env.DB_HOST,
