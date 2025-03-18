@@ -1,22 +1,18 @@
-import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, ManyToOne,} from 'typeorm';
 import {UserEntity} from '../../user/entities/user.entity';
+import {AbstractEntity} from "../../../common/abstract.entity";
 
 @Entity({ name: 'urls' })
-export class UrlEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+export class UrlEntity extends AbstractEntity {
 
     @Column()
-    original_url: string;
+    originalUrl: string;
 
     @Column({ unique: true })
-    short_code: string;
+    shortCode: string;
 
     @Column({ default: 0 })
     visitCount: number;
-
-    @CreateDateColumn()
-    createdAt: Date;
 
     @ManyToOne(() => UserEntity, (user) => user.urls, { onDelete: 'CASCADE' })
     user: UserEntity;

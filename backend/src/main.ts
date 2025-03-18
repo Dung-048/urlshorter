@@ -1,17 +1,13 @@
 import 'reflect-metadata';
-import * as dotenv from 'dotenv';
 import {RequestMethod, ValidationPipe} from '@nestjs/common';
 import {NestFactory} from '@nestjs/core';
 import {json, urlencoded} from 'express';
 import {initializeTransactionalContext} from 'typeorm-transactional';
-
 import {AppModule} from './app.module';
 import {configLogging} from './configuration/config-logging';
 import {configureSwagger} from './configuration/config-swagger';
 import {ApiConfigService} from './shared/services/api-config.service';
 import {SharedModule} from './shared/shared.module';
-
-dotenv.config();
 
 async function bootstrap() {
   initializeTransactionalContext();
@@ -43,6 +39,3 @@ async function bootstrap() {
 }
 
 void bootstrap();
-
-
-

@@ -16,14 +16,14 @@ export class UrlService {
     async createUrl(urlRequestDto: UrlRequest): Promise<Url> {
         return Url.fromEntity(await this.urlRepository.save(
             this.urlRepository.create({
-                original_url: urlRequestDto.originalUrl,
-                short_code: urlRequestDto.shortCode,
+                originalUrl: urlRequestDto.originalUrl,
+                shortCode: urlRequestDto.shortCode,
             })
         ));
     }
 
     async getUrl(shortCode: string): Promise<Url> {
-        const urlEntity = await this.urlRepository.findOneBy( { short_code: shortCode } );
+        const urlEntity = await this.urlRepository.findOneBy( { shortCode: shortCode } );
 
         if (!urlEntity) {
             throw new NotFoundException();
@@ -33,7 +33,7 @@ export class UrlService {
     }
 
     async deleteUrl(shortCode: string): Promise<void> {
-        const result = await await this.urlRepository.delete({short_code: shortCode});
+        const result = await this.urlRepository.delete({shortCode: shortCode});
 
         if (result.affected == 0) {
             throw new NotFoundException();

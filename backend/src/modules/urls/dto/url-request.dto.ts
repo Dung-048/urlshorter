@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsString} from 'class-validator';
+import {IsNotEmpty, IsString, Length} from 'class-validator';
 import {UrlRequest} from '../domain/url-request'
 
 export class UrlRequestDto {
@@ -8,6 +8,7 @@ export class UrlRequestDto {
 
     @IsNotEmpty()
     @IsString()
+    @Length(4, 10)
     shortCode: string;
 
     public static toUrlRequest(urlRequestDto: UrlRequestDto): UrlRequest {

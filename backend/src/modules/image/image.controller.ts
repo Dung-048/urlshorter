@@ -35,7 +35,6 @@ export class ImageController {
 
         const {mimeType, imageData} = decodeBase64(data.file);
         const extension = findFileExtensionByMimeType(mimeType);
-
         const file = {
             fieldname: 'file',
             originalname: 'image.' + extension,
@@ -62,7 +61,6 @@ export class ImageController {
             url: await this.imageService.create(file)
         };
     }
-
     @Get(':fileName')
     @UseInterceptors(FileInterceptor('file'))
     async get( @Param('fileName') fileName: string, @Res({passthrough: true}) res: Response) {

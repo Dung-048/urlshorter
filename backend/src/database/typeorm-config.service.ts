@@ -1,6 +1,5 @@
 import {Injectable} from '@nestjs/common';
 import {TypeOrmModuleOptions, TypeOrmOptionsFactory} from '@nestjs/typeorm';
-
 import {SnakeNamingStrategy} from '../configuration/snake-naming.strategy';
 import {ApiConfigService} from '../shared/services/api-config.service';
 

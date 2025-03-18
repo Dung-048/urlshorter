@@ -4,9 +4,17 @@ import {ApiProperty} from "@nestjs/swagger";
 export class UrlSimpleDto {
     @ApiProperty()
     public id: string;
+
+    @ApiProperty()
     public originalUrl: string;
+
+    @ApiProperty()
     public shortCode: string;
+
+    @ApiProperty()
     public visitCount: number;
+
+    @ApiProperty()
     public createdAt: Date;
 
     public static fromDomain(url: Url): UrlSimpleDto {

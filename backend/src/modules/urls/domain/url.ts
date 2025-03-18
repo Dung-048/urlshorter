@@ -13,11 +13,11 @@ export class Url {
     public static fromEntity(urlEntity: UrlEntity): Url {
         return {
             id: urlEntity.id as Uuid,
-            originalUrl: urlEntity.original_url,
-            shortCode: urlEntity.short_code,
+            originalUrl: urlEntity.originalUrl,
+            shortCode: urlEntity.shortCode,
             visitCount: urlEntity.visitCount,
             createdAt: urlEntity.createdAt,
-            user: urlEntity.user ? User.fromEntity(urlEntity.user) : undefined,
+            user: User.fromEntity(urlEntity.user),
         };
     }
 }
