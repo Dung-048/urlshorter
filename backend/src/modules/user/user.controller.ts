@@ -3,7 +3,6 @@ import {UserService} from './user.service';
 import {UserRequestDto} from './dto/user-request.dto';
 import {ApiTags} from "@nestjs/swagger";
 
-
 @ApiTags('Users')
 @Controller('users')
 export class UserController {

@@ -1,14 +1,14 @@
-import {Column, Entity} from "typeorm";
-import {Uuid} from "../../../common/types";
-import {Gender} from "../domain/gender";
+import {Column, Entity, OneToMany} from "typeorm";
 import {AbstractEntity} from "../../../common/abstract.entity";
+import {UrlEntity} from "../../urls/entities/url.entity";
+import {Gender} from "../domain/gender";
 import {RoleType} from "../../../guards/role-type";
+import {Uuid} from "../../../common/types";
 
 @Entity('users')
 export class UserEntity extends AbstractEntity {
-
-    @Column({unique: true, nullable: true})
-    keyCloakId?: Uuid;
+    @Column({ type: 'uuid', unique: true, nullable: true })
+    keyCloakId?: Uuid | null;
 
     @Column()
     firstName: string;
@@ -16,10 +16,10 @@ export class UserEntity extends AbstractEntity {
     @Column()
     lastName: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     picture?: string;
 
-    @Column({unique: true})
+    @Column({ unique: true })
     email: string;
 
     @Column({
@@ -36,12 +36,15 @@ export class UserEntity extends AbstractEntity {
     })
     role: RoleType;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     appleUserIdentifier?: string;
 
-    @Column({type: 'date', nullable: true})
+    @Column({ type: 'date', nullable: true })
     birthday?: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true})
     phoneNumber: string;
+
+    @OneToMany(() => UrlEntity, (url) => url.user, { cascade: true })
+    urls: UrlEntity[];
 }

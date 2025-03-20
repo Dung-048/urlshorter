@@ -52,7 +52,7 @@ export class CurrentUserDto {
             gender: user.gender,
             role: user.role,
             birthday: user.birthday,
-            phoneNumber: user.phoneNumber,
+            phoneNumber: user.phoneNumber ?? '',
         };
     }
 }

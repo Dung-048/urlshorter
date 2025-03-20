@@ -3,7 +3,6 @@ import {ApiConfigService} from "../../shared/services/api-config.service";
 import {v4 as uuid} from 'uuid';
 import sharp from "sharp";
 
-
 @Injectable()
 export class ImageService {
 
@@ -27,7 +26,6 @@ export class ImageService {
 
     private async resizeImage(file: Express.Multer.File, saveTo: string) {
         const imageLimitSize = this.apiConfigService.imageService.imageLimitSize;
-
         const image = sharp(file.buffer);
         const metadata = await image.metadata();
         const width = metadata.width!;
@@ -39,7 +37,6 @@ export class ImageService {
                 .toFile(saveTo);
         }
 
-        image.toFile(saveTo);
+        await image.toFile(saveTo);
     }
-
 }

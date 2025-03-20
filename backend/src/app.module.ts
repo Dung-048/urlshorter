@@ -1,25 +1,24 @@
-import { join } from 'node:path';
-
-import { HttpModule } from '@nestjs/axios';
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { PassportModule } from '@nestjs/passport';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
-import { addTransactionalDataSource } from 'typeorm-transactional';
-
-import { TypeOrmConfigService } from './database/typeorm-config.service';
-import { JwtAuthGuard } from './decorator/jwt-auth-guard';
-import { LoggingExceptionFilter } from './filter/error-handling-exception-filter';
-import { RolesGuard } from './guards/roles.guard';
-import { AuthModule } from "./modules/auth/auth.module";
-import { ImageModule } from './modules/image/image.module';
-import { KeycloakModule } from './modules/keycloak/keycloak.module';
-import { UserModule } from './modules/user/user.module';
-import { ApiConfigService } from './shared/services/api-config.service';
-import { SharedModule } from './shared/shared.module';
+import {join} from 'node:path';
+import {HttpModule} from '@nestjs/axios';
+import {Module} from '@nestjs/common';
+import {ConfigModule} from '@nestjs/config';
+import {APP_FILTER, APP_GUARD} from '@nestjs/core';
+import {PassportModule} from '@nestjs/passport';
+import {ServeStaticModule} from '@nestjs/serve-static';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {DataSource} from 'typeorm';
+import {addTransactionalDataSource} from 'typeorm-transactional';
+import {TypeOrmConfigService} from './database/typeorm-config.service';
+import {JwtAuthGuard} from './decorator/jwt-auth-guard';
+import {LoggingExceptionFilter} from './filter/error-handling-exception-filter';
+import {RolesGuard} from './guards/roles.guard';
+import {AuthModule} from "./modules/auth/auth.module";
+import {ImageModule} from './modules/image/image.module';
+import {KeycloakModule} from './modules/keycloak/keycloak.module';
+import {UserModule} from './modules/user/user.module';
+import {ApiConfigService} from './shared/services/api-config.service';
+import {SharedModule} from './shared/shared.module';
+import {UrlModule} from './modules/urls/url.module';
 
 @Module({
     imports: [
@@ -53,7 +52,8 @@ import { SharedModule } from './shared/shared.module';
         AuthModule,
         UserModule,
         KeycloakModule,
-        ImageModule
+        ImageModule,
+        UrlModule,
     ],
     providers: [
         {

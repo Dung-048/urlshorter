@@ -32,7 +32,7 @@ nest g resource users --no-spec
 
 ```bash
 # create new migration
-npm run typeorm:migrate src/database/migrations/AddUser
+npm run migration-generate src/database/migrations/AddUser
 
 # apply pending migrations
 npm run migration:run
@@ -46,4 +46,11 @@ npm run start
 ```bash
 /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm Urlshorter --users realm_file
 ```
+
+## giai phóng port xaì lệnh này 
+sudo kill -9 $(lsof -ti:8000) 
+
+## postman 
+post:http://localhost:8000/api/v1/urls
+get/delete:http://localhost:8000/api/v1/urls/{shortCode}
 
