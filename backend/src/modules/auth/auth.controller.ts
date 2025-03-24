@@ -22,6 +22,7 @@ export class AuthController {
 
     @Post('register')
     async register(@Body() registerDto: RegisterFormDto): Promise<AuthResultDto> {
+
         return AuthResultDto.fromAuthResult(await this.authService.register(RegisterFormDto.toRegisterForm(registerDto)));
     }
 
