@@ -12,7 +12,6 @@ export class UrlService {
         @InjectRepository(UrlEntity)
         private readonly urlRepository: Repository<UrlEntity>,
     ) {}
-
     async createUrl(urlRequestDto: UrlRequest, user: UserEntity): Promise<Url> {
         return Url.fromEntity(await this.urlRepository.save(
             this.urlRepository.create({
@@ -23,37 +22,34 @@ export class UrlService {
         ));
     }
 
-    async getUrl(shortCode: string): Promise<Url> {
-        const urlEntity = await this.urlRepository.findOne({
-            where: { shortCode },
-        });
+    private async findUrlOrThrow(criterial: Partial<UrlEntity>): Promise<UrlEntity> {
+        const urlEntity = await this.urlRepository.findOneBy(criterial);
 
         if (!urlEntity) {
             throw new NotFoundException('URL không tồn tại');
         }
 
+        return urlEntity;
+    }
+
+    async getUrl(shortCode: string): Promise<Url> {
+        const urlEntity = await this.findUrlOrThrow({shortCode});
         return Url.fromEntity(urlEntity);
     }
 
     async deleteUrl(shortCode: string, user: UserEntity): Promise<void> {
-        const urlEntity = await this.urlRepository.findOneBy({
+        const urlEntity = await this.findUrlOrThrow({
             shortCode,
-            userId: user.id,
+            userId: user.id
         });
-
-        if (!urlEntity) {
-            throw new NotFoundException('URL không tồn tại');
-        }
-
-        await this.urlRepository.delete({ id: urlEntity.id });
+        await this.urlRepository.remove(urlEntity);
     }
 
     async getAllUrls(user: UserEntity): Promise<Url[]> {
         const urlEntities = await this.urlRepository.find({
-            where: { user: { id: user.id } },
-            order: { createdAt: 'ASC' },
+            where: { userId: user.id },
+            order: { createdAt: 'DESC' },
         });
-
-        return urlEntities.map(Url.fromEntity);
+        return Url.fromEntities(urlEntities);
     }
 }

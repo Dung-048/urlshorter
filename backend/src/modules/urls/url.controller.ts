@@ -17,18 +17,16 @@ export class UrlController {
         @Body() body: UrlRequestDto,
         @AuthUser() user: UserEntity
     ): Promise<UrlSimpleDto> {
-        const url = await this.urlService.createUrl(
+        return UrlSimpleDto.fromDomain(await this.urlService.createUrl(
             UrlRequestDto.toUrlRequest(body),
             user
-        );
-        return UrlSimpleDto.fromDomain(url);
+        ));
     }
 
     @RequireLoggedIn()
     @Get()
     async getAllUrls(@AuthUser() user: UserEntity): Promise<UrlSimpleDto[]> {
-        const urls = await this.urlService.getAllUrls(user);
-        return urls.map(UrlSimpleDto.fromDomain);
+        return UrlSimpleDto.fromDomains(await this.urlService.getAllUrls(user));
     }
 
     @Get(':shortCode')
@@ -37,12 +35,6 @@ export class UrlController {
         @Res() res: Response
     ): Promise<void> {
         const url = await this.urlService.getUrl(shortCode);
-
-        if (!url) {
-            res.status(404).json({ statusCode: 404, message: 'URL không tồn tại' });
-            return;
-        }
-
         res.setHeader('X-Original-URL', url.originalUrl);
         res.redirect(301, url.originalUrl);
     }

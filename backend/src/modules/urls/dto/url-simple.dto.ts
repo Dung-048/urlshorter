@@ -28,4 +28,7 @@ export class UrlSimpleDto {
 
         };
     }
+    public static fromDomains(urls: Url[]): UrlSimpleDto[] {
+        return urls.map(this.fromDomain);
+    }
 }
