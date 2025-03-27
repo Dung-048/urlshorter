@@ -17,6 +17,7 @@ export class UrlSimpleDto {
     @ApiProperty()
     public createdAt: Date;
 
+
     public static fromDomain(url: Url): UrlSimpleDto {
         return {
             id: url.id,
@@ -24,6 +25,10 @@ export class UrlSimpleDto {
             shortCode: url.shortCode,
             visitCount: url.visitCount,
             createdAt: url.createdAt,
+
         };
+    }
+    public static fromDomains(urls: Url[]): UrlSimpleDto[] {
+        return urls.map(this.fromDomain);
     }
 }

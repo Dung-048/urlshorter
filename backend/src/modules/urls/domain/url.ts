@@ -20,4 +20,7 @@ export class Url {
             user: User.fromEntity(urlEntity.user),
         };
     }
+    public static fromEntities(entities: UrlEntity[]): Url[] {
+        return entities.map(this.fromEntity);
+    }
 }
