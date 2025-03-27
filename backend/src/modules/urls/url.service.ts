@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {UrlEntity} from './entities/url.entity';
@@ -12,28 +12,43 @@ export class UrlService {
         @InjectRepository(UrlEntity)
         private readonly urlRepository: Repository<UrlEntity>,
     ) {}
+
     async createUrl(urlRequestDto: UrlRequest, user: UserEntity): Promise<Url> {
-        return Url.fromEntity(await this.urlRepository.save(
-            this.urlRepository.create({
-                originalUrl: urlRequestDto.originalUrl,
-                shortCode: urlRequestDto.shortCode,
-                user: user,
-            })
-        ));
+        let { shortCode } = urlRequestDto;
+
+        if (!shortCode) {
+            shortCode = await this.generateUniqueCode();
+        } else {
+
+            if (!/^[a-zA-Z0-9_]{6}$/.test(shortCode)) {
+                throw new BadRequestException('Mã chứa chữ, số và "_" (6 ký tự)');
+            }
+
+            const existingUrl = await this.urlRepository.findOneBy({ shortCode });
+            if (existingUrl) {
+                throw new BadRequestException('Mã đã tồn tại');
+            }
+        }
+
+        const newUrl = this.urlRepository.create({
+            originalUrl: urlRequestDto.originalUrl,
+            shortCode,
+            user,
+        });
+
+        return Url.fromEntity(await this.urlRepository.save(newUrl));
     }
 
-    private async findUrlOrThrow(criterial: Partial<UrlEntity>): Promise<UrlEntity> {
-        const urlEntity = await this.urlRepository.findOneBy(criterial);
-
+    private async findUrlOrThrow(criteria: Partial<UrlEntity>): Promise<UrlEntity> {
+        const urlEntity = await this.urlRepository.findOneBy(criteria);
         if (!urlEntity) {
             throw new NotFoundException('URL không tồn tại');
         }
-
         return urlEntity;
     }
 
     async getUrl(shortCode: string): Promise<Url> {
-        const urlEntity = await this.findUrlOrThrow({shortCode});
+        const urlEntity = await this.findUrlOrThrow({ shortCode });
         return Url.fromEntity(urlEntity);
     }
 
@@ -52,4 +67,16 @@ export class UrlService {
         });
         return Url.fromEntities(urlEntities);
     }
+
+    private async generateUniqueCode(): Promise<string> {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_';
+        let code: string;
+
+        do {
+            code = Array.from({ length: 6 }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
+        } while (await this.urlRepository.findOneBy({ shortCode: code }));
+
+        return code;
+    }
 }
+

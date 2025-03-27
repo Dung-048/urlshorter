@@ -47,7 +47,6 @@
     "class-validator": "^0.14.1",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
-    "emitter-listener": "^1.1.2",
     "google-auth-library": "^9.15.0",
     "googleapis": "^144.0.0",
     "jwks-rsa": "^3.1.0",
