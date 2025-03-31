@@ -47,10 +47,3 @@ npm run start
 /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --realm Urlshorter --users realm_file
 ```
 
-## giai phóng port xaì lệnh này 
-sudo kill -9 $(lsof -ti:8000) 
-
-## postman 
-post:http://localhost:8000/api/v1/urls
-get/delete:http://localhost:8000/api/v1/urls/{shortCode}
-

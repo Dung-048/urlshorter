@@ -9,7 +9,7 @@ export class UrlRequestDto {
 
     @IsOptional()
     @IsString()
-    @Matches(/^[a-zA-Z0-9_]{6}$/,)
+    @Matches(/^[a-zA-Z0-9_]{6}$/)
     shortCode:string;
 
     public static toUrlRequest(urlRequestDto: UrlRequestDto): UrlRequest {

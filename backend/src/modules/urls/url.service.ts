@@ -17,16 +17,21 @@ export class UrlService {
     async createUrl(urlRequestDto: UrlRequest, user: UserEntity): Promise<Url> {
         const { originalUrl, shortCode } = urlRequestDto;
 
+        const existingUrl = await this.urlRepository.findOneBy({ originalUrl, userId: user.id });
+        if (existingUrl) {
+            throw new BadRequestException('URL đã được rút gọn trước đó');
+        }
+
         const verifiedShortCode = await this.verifyOrGenerateShortCode(shortCode);
 
-        const newUrl = this.urlRepository.create({
+        const newUrl = await this.urlRepository.save(this.urlRepository.create({
             originalUrl,
             shortCode: verifiedShortCode,
             user,
-        });
-
-        return Url.fromEntity(await this.urlRepository.save(newUrl));
+        }));
+        return Url.fromEntity(newUrl);
     }
+
 
     private async verifyOrGenerateShortCode(shortCode?: string): Promise<string> {
         if (!shortCode) {
@@ -42,12 +47,9 @@ export class UrlService {
     }
 
     private async generateUniqueCode(): Promise<string> {
-        let code: string;
-        do {
-            code = generateCode();
-        } while (await this.urlRepository.findOneBy({ shortCode: code }));
+        const code = generateCode();
 
-        return code;
+        return (await this.urlRepository.existsBy({shortCode: code})) ? await this.generateUniqueCode() : code;
     }
 
     private async findUrlOrThrow(criteria: Partial<UrlEntity>): Promise<UrlEntity> {
@@ -64,10 +66,7 @@ export class UrlService {
     }
 
     async deleteUrl(shortCode: string, user: UserEntity): Promise<void> {
-        const urlEntity = await this.findUrlOrThrow({
-            shortCode,
-            userId: user.id
-        });
+        const urlEntity = await this.findUrlOrThrow({ shortCode, userId: user.id });
         await this.urlRepository.remove(urlEntity);
     }
 
@@ -79,4 +78,3 @@ export class UrlService {
         return Url.fromEntities(urlEntities);
     }
 }
-
