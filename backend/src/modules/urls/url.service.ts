@@ -17,21 +17,16 @@ export class UrlService {
     async createUrl(urlRequestDto: UrlRequest, user: UserEntity): Promise<Url> {
         const { originalUrl, shortCode } = urlRequestDto;
 
-        const existingUrl = await this.urlRepository.findOneBy({ originalUrl, userId: user.id });
-        if (existingUrl) {
-            throw new BadRequestException('URL đã được rút gọn trước đó');
-        }
-
         const verifiedShortCode = await this.verifyOrGenerateShortCode(shortCode);
 
-        const newUrl = await this.urlRepository.save(this.urlRepository.create({
+        const newUrl = await this.urlRepository.save({
             originalUrl,
             shortCode: verifiedShortCode,
             user,
-        }));
+        });
+
         return Url.fromEntity(newUrl);
     }
-
 
     private async verifyOrGenerateShortCode(shortCode?: string): Promise<string> {
         if (!shortCode) {
