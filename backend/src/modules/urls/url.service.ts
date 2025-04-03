@@ -1,48 +1,33 @@
 import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
-import axios from 'axios';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {UrlEntity} from './entities/url.entity';
 import {UrlRequest} from './domain/url-request';
 import {Url} from './domain/url';
 import {UserEntity} from '../user/entities/user.entity';
-import {generateCode} from "../../utils/code-utils";
+import {generateCode} from '../../utils/code-utils';
+import {VirusTotalService} from './service/virustotal.service';
 
 @Injectable()
 export class UrlService {
-    private apiKey = 'da1b859bde1ec66b908f100e674b283173750abb829ac49e3839a887486b63bc';
-
     constructor(
         @InjectRepository(UrlEntity)
         private readonly urlRepository: Repository<UrlEntity>,
+        private readonly virusTotalService: VirusTotalService,
     ) {}
 
     async createUrl(urlRequestDto: UrlRequest, user: UserEntity): Promise<Url> {
-
         const { originalUrl, shortCode } = urlRequestDto;
         const verifiedShortCode = await this.verifyOrGenerateShortCode(shortCode);
-        const safetyScore = await this.checkUrlSafety(originalUrl);
+        const safetyScore = await this.virusTotalService.checkUrlSafety(originalUrl);
         const newUrl = await this.urlRepository.save({
-                originalUrl,
-                shortCode: verifiedShortCode,
-                user,
-                safetyScore,
-            });
-
-            return Url.fromEntity(newUrl);
-    }
-
-    async checkUrlSafety(url: string): Promise<number> {
-        const encodedUrl = Buffer.from(url).toString('base64');
-        const response = await axios.get(`https://www.virustotal.com/api/v3/urls/${encodedUrl}`, {
-            headers: {
-                'x-apikey': this.apiKey,
-            },
+            originalUrl,
+            shortCode: verifiedShortCode,
+            user,
+            safetyScore,
         });
-        const safetyScore = response.data.data.attributes.last_analysis_stats.malicious || 0;
-        return safetyScore;
+        return Url.fromEntity(newUrl);
     }
-
 
     private async verifyOrGenerateShortCode(shortCode?: string): Promise<string> {
         if (!shortCode) {
