@@ -11,8 +11,7 @@ export class VirusTotalService {
     }
 
     private encodeUrl(url: string): string {
-        const encodedUrl = Buffer.from(url).toString('base64');
-        return encodedUrl.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        return Buffer.from(url).toString('base64url');
     }
 
     async checkUrlSafety(url: string): Promise<number> {

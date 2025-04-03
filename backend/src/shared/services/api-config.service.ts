@@ -69,7 +69,6 @@ export class ApiConfigService {
     get virustotalKey() {
         return {
             apiKey: this.getString('VIRUS_TOTAL_API_KEY'),
-
         };
     }
 
