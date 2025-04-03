@@ -66,6 +66,12 @@ export class ApiConfigService {
             tokenUri: `${baseUrl}/realms/${realmName}/protocol/openid-connect/token`,
         };
     }
+    get virustotalKey() {
+        return {
+            apiKey: this.getString('VIRUS_TOTAL_API_KEY'),
+
+        };
+    }
 
     get serverPort(): number {
         return this.getNumber('PORT');

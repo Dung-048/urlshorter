@@ -6,7 +6,7 @@ import {UrlRequest} from './domain/url-request';
 import {Url} from './domain/url';
 import {UserEntity} from '../user/entities/user.entity';
 import {generateCode} from '../../utils/code-utils';
-import {VirusTotalService} from './service/virustotal.service';
+import {VirusTotalService} from "./service/virustotal.service";
 
 @Injectable()
 export class UrlService {
