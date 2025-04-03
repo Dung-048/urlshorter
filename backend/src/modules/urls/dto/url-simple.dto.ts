@@ -17,6 +17,9 @@ export class UrlSimpleDto {
     @ApiProperty()
     public createdAt: Date;
 
+    @ApiProperty()
+    safetyScore: number;
+
 
     public static fromDomain(url: Url): UrlSimpleDto {
         return {
@@ -25,6 +28,7 @@ export class UrlSimpleDto {
             shortCode: url.shortCode,
             visitCount: url.visitCount,
             createdAt: url.createdAt,
+            safetyScore:url.safetyScore,
 
         };
     }

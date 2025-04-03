@@ -9,6 +9,7 @@ export class Url {
     visitCount: number;
     createdAt: Date;
     user?: User;
+    safetyScore: number;
 
     public static fromEntity(urlEntity: UrlEntity): Url {
         return {
@@ -17,6 +18,7 @@ export class Url {
             shortCode: urlEntity.shortCode,
             visitCount: urlEntity.visitCount,
             createdAt: urlEntity.createdAt,
+            safetyScore:urlEntity.safetyScore,
             user: User.fromEntity(urlEntity.user),
         };
     }
