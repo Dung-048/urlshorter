@@ -20,4 +20,7 @@ export class UrlEntity extends AbstractEntity {
 
     @ManyToOne(() => UserEntity, (user) => user.urls, { onDelete: 'CASCADE' })
     user: UserEntity;
+
+    @Column({ nullable: true })
+    safetyScore: number;
 }
