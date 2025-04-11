@@ -1,6 +1,6 @@
 import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {IsNull, Repository} from 'typeorm';
+import {Repository} from 'typeorm';
 import {UrlEntity} from './entities/url.entity';
 import {UrlRequest} from './domain/url-request';
 import {Url} from './domain/url';
@@ -62,17 +62,5 @@ export class UrlService {
             order: { createdAt: 'DESC' },
         });
         return Url.fromEntities(urlEntities);
-    }
-
-    async findUnscoredUrls(limit: number): Promise<UrlEntity[]> {
-        return this.urlRepository.find({
-            where: { safetyScore: IsNull() },
-            order: { createdAt: 'ASC' },
-            take: limit,
-        });
-    }
-
-    async updateUrlSafetyScore(id: string, score: number): Promise<void> {
-        await this.urlRepository.update(id, { safetyScore: score });
     }
 }
