@@ -48,15 +48,22 @@ export class UrlSafetyCheckJob {
 
     private async safeProcessUrl(url: UrlEntity): Promise<void> {
         try {
-            const score = await this.virusTotalService.checkUrlSafety(url.originalUrl);
-            url.safetyScore = score;
-            await this.urlRepository.save(url);
+            const safetyScore = await this.virusTotalService.checkUrlSafety(url.originalUrl);
 
-            this.logger.log(`${url.originalUrl} - Score: ${score}`);
+            const currentEntity = await this.urlRepository.findOneBy({ id: url.id });
+            if (currentEntity) {
+                await this.urlRepository.save({
+                    ...currentEntity,
+                    safetyScore,
+                });
+            }
+            this.logger.log(`${url.originalUrl} - Score: ${safetyScore}`);
         } catch (error) {
             this.logger.error(
                 `Failed to process url ${url.originalUrl}: ${error instanceof Error ? error.message : error}`,
             );
+            throw error;
         }
     }
+
 }
