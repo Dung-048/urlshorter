@@ -19,9 +19,11 @@ import {UserModule} from './modules/user/user.module';
 import {ApiConfigService} from './shared/services/api-config.service';
 import {SharedModule} from './shared/shared.module';
 import {UrlModule} from './modules/urls/url.module';
+import {ScheduleModule} from "@nestjs/schedule";
 
 @Module({
     imports: [
+        ScheduleModule.forRoot(),
         PassportModule.register({defaultStrategy: 'jwt'}),
         SharedModule,
         ServeStaticModule.forRoot({
@@ -54,6 +56,7 @@ import {UrlModule} from './modules/urls/url.module';
         KeycloakModule,
         ImageModule,
         UrlModule,
+
     ],
     providers: [
         {

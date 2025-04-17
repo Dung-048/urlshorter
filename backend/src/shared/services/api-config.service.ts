@@ -66,10 +66,15 @@ export class ApiConfigService {
             tokenUri: `${baseUrl}/realms/${realmName}/protocol/openid-connect/token`,
         };
     }
-    get virustotalKey() {
+    get virustotal() {
         return {
-            apiKey: this.getString('VIRUS_TOTAL_API_KEY'),
+            apiKey: this.getString('VIRUSTOTAL_API_KEY'),
+            checkEndpoint: this.getString('VIRUSTOTAL_CHECK_ENDPOINT'),
+            timeout: this.getNumber('VIRUSTOTAL_TIMEOUT'),
         };
+    }
+    get urlScoreCronLimit() {
+        return this.getNumber('URL_SCORE_CRON_LIMIT');
     }
 
     get serverPort(): number {
